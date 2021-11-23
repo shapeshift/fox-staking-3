@@ -37,7 +37,7 @@ describe('StakingRewardsFactory', () => {
 
   it('deployment gas', async () => {
     const receipt = await provider.getTransactionReceipt(stakingRewardsFactory.deployTransaction.hash)
-    expect(receipt.gasUsed).to.eq('2080815')
+    expect(receipt.gasUsed).to.eq('2150601')
   })
 
   describe('#deploy', () => {
@@ -111,7 +111,7 @@ describe('StakingRewardsFactory', () => {
         await mineBlock(provider, genesis)
         const tx = await stakingRewardsFactory.notifyRewardAmounts()
         const receipt = await tx.wait()
-        expect(receipt.gasUsed).to.eq('416215')
+        expect(receipt.gasUsed).to.eq('416735')
       })
 
       it('no op if called twice', async () => {
