@@ -51,7 +51,7 @@ export async function getApprovalDigest(
   )
 }
 
-export const REWARDS_DURATION = 60 * 60 * 24 * 90
+export const REWARDS_DURATION = 60 * 60 * 24 * 135
 
 export function expandTo18Decimals(n: number): BigNumber {
   return BigNumber.from(n).mul(BigNumber.from(10).pow(18))
