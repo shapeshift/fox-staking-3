@@ -124,7 +124,7 @@ describe('StakingRewardsFactory', () => {
       it('fails if called without sufficient balance', async () => {
         await mineBlock(provider, genesis)
         await expect(stakingRewardsFactory.notifyRewardAmounts()).to.be.revertedWith(
-          'SafeMath: subtraction overflow' // emitted from rewards token
+          'ERC20: transfer amount exceeds balance' // emitted from rewards token
         )
       })
 
