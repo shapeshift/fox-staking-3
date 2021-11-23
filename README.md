@@ -1,5 +1,5 @@
 # Staker
-Farming contract based on https://github.com/Uniswap/liquidity-staker
+Farming contract based on https://github.com/Uniswap/liquidity-staker; currently deployed at [0xc54B9F82C1c54E9D4d274d633c7523f2299c42A0](https://etherscan.io/address/0xc54B9F82C1c54E9D4d274d633c7523f2299c42A0) on Ethereum Mainnet
 
 1. install truffle globally `npm install -g truffle`
 2. Populate .env variables
