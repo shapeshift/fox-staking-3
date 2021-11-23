@@ -1,7 +1,7 @@
-pragma solidity ^0.5.16;
+pragma solidity ^0.7.6;
 
-import 'openzeppelin-solidity-2.3.0/contracts/token/ERC20/IERC20.sol';
-import 'openzeppelin-solidity-2.3.0/contracts/ownership/Ownable.sol';
+import '../openzeppelin-solidity-3.4.0/contracts/token/ERC20/IERC20.sol';
+import '../openzeppelin-solidity-3.4.0/contracts/access/Ownable.sol';
 
 import './StakingRewards.sol';
 
@@ -25,7 +25,7 @@ contract StakingRewardsFactory is Ownable {
     constructor(
         address _rewardsToken,
         uint _stakingRewardsGenesis
-    ) Ownable() public {
+    ) Ownable() {
         require(_stakingRewardsGenesis >= block.timestamp, 'StakingRewardsFactory::constructor: genesis too soon');
 
         rewardsToken = _rewardsToken;
@@ -36,7 +36,7 @@ contract StakingRewardsFactory is Ownable {
 
     // deploy a staking reward contract for the staking token, and store the reward amount
     // the reward will be distributed to the staking reward contract no sooner than the genesis
-    function deploy(address stakingToken, uint rewardAmount) public onlyOwner {
+    function deploy(address stakingToken, uint rewardAmount) external onlyOwner {
         StakingRewardsInfo storage info = stakingRewardsInfoByStakingToken[stakingToken];
         require(info.stakingRewards == address(0), 'StakingRewardsFactory::deploy: already deployed');
 
@@ -48,7 +48,7 @@ contract StakingRewardsFactory is Ownable {
     ///// permissionless functions
 
     // call notifyRewardAmount for all staking tokens.
-    function notifyRewardAmounts() public {
+    function notifyRewardAmounts() external {
         require(stakingTokens.length > 0, 'StakingRewardsFactory::notifyRewardAmounts: called before any deploys');
         for (uint i = 0; i < stakingTokens.length; i++) {
             notifyRewardAmount(stakingTokens[i]);

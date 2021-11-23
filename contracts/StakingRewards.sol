@@ -1,10 +1,9 @@
-pragma solidity ^0.5.16;
+pragma solidity ^0.7.6;
 
-import "openzeppelin-solidity-2.3.0/contracts/math/Math.sol";
-import "openzeppelin-solidity-2.3.0/contracts/math/SafeMath.sol";
-import "openzeppelin-solidity-2.3.0/contracts/token/ERC20/ERC20Detailed.sol";
-import "openzeppelin-solidity-2.3.0/contracts/token/ERC20/SafeERC20.sol";
-import "openzeppelin-solidity-2.3.0/contracts/utils/ReentrancyGuard.sol";
+import "../openzeppelin-solidity-3.4.0/contracts/math/Math.sol";
+import "../openzeppelin-solidity-3.4.0/contracts/math/SafeMath.sol";
+import "../openzeppelin-solidity-3.4.0/contracts/token/ERC20/SafeERC20.sol";
+import "../openzeppelin-solidity-3.4.0/contracts/utils/ReentrancyGuard.sol";
 
 // Inheritance
 import "./interfaces/IStakingRewards.sol";
@@ -20,7 +19,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
     IERC20 public stakingToken;
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
-    uint256 public rewardsDuration = 60 days;
+    uint256 public rewardsDuration = 90 days;
     uint256 public lastUpdateTime;
     uint256 public rewardPerTokenStored;
 
@@ -36,7 +35,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         address _rewardsDistribution,
         address _rewardsToken,
         address _stakingToken
-    ) public {
+    ) {
         rewardsToken = IERC20(_rewardsToken);
         stakingToken = IERC20(_stakingToken);
         rewardsDistribution = _rewardsDistribution;
@@ -44,19 +43,19 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
 
     /* ========== VIEWS ========== */
 
-    function totalSupply() external view returns (uint256) {
+    function totalSupply() external view override returns (uint256) {
         return _totalSupply;
     }
 
-    function balanceOf(address account) external view returns (uint256) {
+    function balanceOf(address account) external view override returns (uint256) {
         return _balances[account];
     }
 
-    function lastTimeRewardApplicable() public view returns (uint256) {
+    function lastTimeRewardApplicable() public view override returns (uint256) {
         return Math.min(block.timestamp, periodFinish);
     }
 
-    function rewardPerToken() public view returns (uint256) {
+    function rewardPerToken() public view override returns (uint256) {
         if (_totalSupply == 0) {
             return rewardPerTokenStored;
         }
@@ -66,11 +65,11 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
             );
     }
 
-    function earned(address account) public view returns (uint256) {
+    function earned(address account) public view override returns (uint256) {
         return _balances[account].mul(rewardPerToken().sub(userRewardPerTokenPaid[account])).div(1e18).add(rewards[account]);
     }
 
-    function getRewardForDuration() external view returns (uint256) {
+    function getRewardForDuration() external view override returns (uint256) {
         return rewardRate.mul(rewardsDuration);
     }
 
@@ -88,7 +87,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         emit Staked(msg.sender, amount);
     }
 
-    function stake(uint256 amount) external nonReentrant updateReward(msg.sender) {
+    function stake(uint256 amount) external override nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot stake 0");
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
@@ -96,7 +95,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) public nonReentrant updateReward(msg.sender) {
+    function withdraw(uint256 amount) public override nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot withdraw 0");
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = _balances[msg.sender].sub(amount);
@@ -104,7 +103,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         emit Withdrawn(msg.sender, amount);
     }
 
-    function getReward() public nonReentrant updateReward(msg.sender) {
+    function getReward() public override nonReentrant updateReward(msg.sender) {
         uint256 reward = rewards[msg.sender];
         if (reward > 0) {
             rewards[msg.sender] = 0;
@@ -113,14 +112,14 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         }
     }
 
-    function exit() external {
+    function exit() external override {
         withdraw(_balances[msg.sender]);
         getReward();
     }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 
-    function notifyRewardAmount(uint256 reward) external onlyRewardsDistribution updateReward(address(0)) {
+    function notifyRewardAmount(uint256 reward) external override onlyRewardsDistribution updateReward(address(0)) {
         if (block.timestamp >= periodFinish) {
             rewardRate = reward.div(rewardsDuration);
         } else {

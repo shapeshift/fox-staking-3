@@ -1,9 +1,9 @@
-pragma solidity ^0.5.16;
+pragma solidity ^0.7.6;
 
-contract RewardsDistributionRecipient {
+abstract contract RewardsDistributionRecipient {
     address public rewardsDistribution;
 
-    function notifyRewardAmount(uint256 reward) external;
+    function notifyRewardAmount(uint256 reward) external virtual;
 
     modifier onlyRewardsDistribution() {
         require(msg.sender == rewardsDistribution, "Caller is not RewardsDistribution contract");
