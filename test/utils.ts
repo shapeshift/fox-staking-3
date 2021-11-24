@@ -4,7 +4,7 @@ const PERMIT_TYPEHASH = utils.keccak256(
   utils.toUtf8Bytes('Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)')
 )
 
-function getDomainSeparator(name: string, tokenAddress: string) {
+function getDomainSeparator(name: string, tokenAddress: string, chainId: number) {
   return utils.keccak256(
     utils.defaultAbiCoder.encode(
       ['bytes32', 'bytes32', 'bytes32', 'uint256', 'address'],
@@ -14,7 +14,7 @@ function getDomainSeparator(name: string, tokenAddress: string) {
         ),
         utils.keccak256(utils.toUtf8Bytes(name)),
         utils.keccak256(utils.toUtf8Bytes('1')),
-        1,
+        chainId,
         tokenAddress,
       ]
     )
@@ -29,10 +29,11 @@ export async function getApprovalDigest(
     value: BigNumber
   },
   nonce: BigNumber,
-  deadline: BigNumber
+  deadline: BigNumber,
+  chainId: number
 ): Promise<string> {
   const name = await token.name()
-  const DOMAIN_SEPARATOR = getDomainSeparator(name, token.address)
+  const DOMAIN_SEPARATOR = getDomainSeparator(name, token.address, chainId)
   return utils.keccak256(
     utils.solidityPack(
       ['bytes1', 'bytes1', 'bytes32', 'bytes32'],

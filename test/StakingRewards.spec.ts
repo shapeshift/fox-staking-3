@@ -4,7 +4,7 @@ import { ecsign } from 'ethereumjs-util'
 import { stakingRewardsFixture } from './fixtures'
 import { REWARDS_DURATION, expandTo18Decimals, mineBlock, getApprovalDigest, setupTests } from './utils'
 
-const { expect, ethers: { constants }, waffle: { createFixtureLoader, deployContract }, provider, StakingRewards } = setupTests()
+const { expect, ethers: { constants }, waffle: { createFixtureLoader, deployContract }, provider, StakingRewards, isHardhat } = setupTests()
 
 describe('StakingRewards', () => {
   const [wallet, staker, secondStaker] = provider.getWallets()
@@ -70,7 +70,7 @@ describe('StakingRewards', () => {
     expect(rewardAmount).to.be.eq(reward.div(REWARDS_DURATION).mul(REWARDS_DURATION))
   })
 
-  it('stakeWithPermit [ @skip-on-coverage ]', async () => {
+  it('stakeWithPermit', async () => {
     // stake with staker
     const stake = expandTo18Decimals(2)
     await stakingToken.transfer(staker.address, stake)
@@ -78,11 +78,13 @@ describe('StakingRewards', () => {
     // get permit
     const nonce = await stakingToken.nonces(staker.address)
     const deadline = constants.MaxUint256
+    const { chainId } = isHardhat ? await provider.getNetwork() : { chainId: 1 }
     const digest = await getApprovalDigest(
       stakingToken,
       { owner: staker.address, spender: stakingRewards.address, value: stake },
       nonce,
-      deadline
+      deadline,
+      chainId
     )
     const { v, r, s } = ecsign(Buffer.from(digest.slice(2), 'hex'), Buffer.from(staker.privateKey.slice(2), 'hex'))
 
