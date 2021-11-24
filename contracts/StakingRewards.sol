@@ -15,15 +15,24 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
 
     /* ========== STATE VARIABLES ========== */
 
+    /// The token staking rewards will be paid in.
     IERC20 public rewardsToken;
+    /// The token which must be staked to earn rewards.
     IERC20 public stakingToken;
+    /// The time at which reward distribution will be complete.
     uint256 public periodFinish = 0;
+    /// The rate at which rewards will be distributed.
     uint256 public rewardRate = 0;
+    /// How long rewards will be distributed after the staking period begins.
     uint256 public rewardsDuration = 135 days;
+    /// The last time rewardPerTokenStored was updated.
     uint256 public lastUpdateTime;
+    /// The lastest snapshot of the amount of reward allocated to each staked token.
     uint256 public rewardPerTokenStored;
 
+    /// How much reward-per-token has been paid out to each user who has withdrawn their stake.
     mapping(address => uint256) public userRewardPerTokenPaid;
+    /// How much reward each user has earned.
     mapping(address => uint256) public rewards;
 
     uint256 private _totalSupply;
@@ -31,6 +40,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
 
     /* ========== CONSTRUCTOR ========== */
 
+    /// Deploy a new StakingRewards contract with the specified parameters. (This should only be done by the StakingRewardsFactory.)
     constructor(
         address _rewardsDistribution,
         address _rewardsToken,
@@ -43,18 +53,22 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
 
     /* ========== VIEWS ========== */
 
+    /// Returns the total number of LP tokens staked.
     function totalSupply() external view override returns (uint256) {
         return _totalSupply;
     }
 
+    /// Returns the total number of LP tokens staked by a given address.
     function balanceOf(address account) external view override returns (uint256) {
         return _balances[account];
     }
 
+    /// Returns the last time for which a rewards have already been earned.
     function lastTimeRewardApplicable() public view override returns (uint256) {
         return Math.min(block.timestamp, periodFinish);
     }
 
+    /// Returns the current amount of reward allocated per staked LP token.
     function rewardPerToken() public view override returns (uint256) {
         if (_totalSupply == 0) {
             return rewardPerTokenStored;
@@ -65,16 +79,19 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
             );
     }
 
+    /// Returns the total reward earnings associated with a given address.
     function earned(address account) public view override returns (uint256) {
         return _balances[account].mul(rewardPerToken().sub(userRewardPerTokenPaid[account])).div(1e18).add(rewards[account]);
     }
 
+    /// Returns the total reward amount.
     function getRewardForDuration() external view override returns (uint256) {
         return rewardRate.mul(rewardsDuration);
     }
 
     /* ========== MUTATIVE FUNCTIONS ========== */
 
+    /// Stake a number of LP tokens to earn rewards, using a signed permit instead of a balance approval.
     function stakeWithPermit(uint256 amount, uint deadline, uint8 v, bytes32 r, bytes32 s) external nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot stake 0");
         _totalSupply = _totalSupply.add(amount);
@@ -87,6 +104,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         emit Staked(msg.sender, amount);
     }
 
+    /// Stake a number of LP tokens to earn rewards.
     function stake(uint256 amount) external override nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot stake 0");
         _totalSupply = _totalSupply.add(amount);
@@ -95,6 +113,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         emit Staked(msg.sender, amount);
     }
 
+    /// Withdraw a number of LP tokens.
     function withdraw(uint256 amount) public override nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot withdraw 0");
         _totalSupply = _totalSupply.sub(amount);
@@ -103,6 +122,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         emit Withdrawn(msg.sender, amount);
     }
 
+    /// Transfer the caller's earned rewards.
     function getReward() public override nonReentrant updateReward(msg.sender) {
         uint256 reward = rewards[msg.sender];
         if (reward > 0) {
@@ -112,6 +132,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         }
     }
 
+    /// Withdraw all staked LP tokens and any pending rewards.
     function exit() external override {
         withdraw(_balances[msg.sender]);
         getReward();
@@ -119,6 +140,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 
+    /// Called by the StakingRewardsFactory to begin reward distribution.
     function notifyRewardAmount(uint256 reward) external override onlyRewardsDistribution updateReward(address(0)) {
         if (block.timestamp >= periodFinish) {
             rewardRate = reward.div(rewardsDuration);
@@ -154,12 +176,17 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
 
     /* ========== EVENTS ========== */
 
+    /// Emitted when the StakingRewardsFactory has allocated a reward balance to a StakingRewards contract, starting the staking period.
     event RewardAdded(uint256 reward);
+    /// Emitted when a user stakes their LP tokens.
     event Staked(address indexed user, uint256 amount);
+    /// Emitted when a user withdraws their LP tokens.
     event Withdrawn(address indexed user, uint256 amount);
+    /// Emitted when a user has been paid a reward.
     event RewardPaid(address indexed user, uint256 reward);
 }
 
 interface IUniswapV2ERC20 {
+    /// Allows a user to permit a contract to access their tokens by signing a permit.
     function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external;
 }

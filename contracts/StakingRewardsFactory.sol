@@ -7,21 +7,24 @@ import './StakingRewards.sol';
 
 contract StakingRewardsFactory is Ownable {
     // immutables
+    /// The token rewards will be paid in.
     address public rewardsToken;
+    /// The earliest time at which staking rewards may start.
     uint public stakingRewardsGenesis;
 
-    // the staking tokens for which the rewards contract has been deployed
+    /// The staking tokens for which the rewards contract has been deployed
     address[] public stakingTokens;
 
-    // info about rewards for a particular staking token
+    /// info about rewards for a particular staking token
     struct StakingRewardsInfo {
         address stakingRewards;
         uint rewardAmount;
     }
 
-    // rewards info by staking token
+    /// rewards info by staking token
     mapping(address => StakingRewardsInfo) public stakingRewardsInfoByStakingToken;
 
+    /// Deploy a new StakingRewardsFactory to distribute the specified rewards token staring at a specific genesis time.
     constructor(
         address _rewardsToken,
         uint _stakingRewardsGenesis
@@ -34,8 +37,8 @@ contract StakingRewardsFactory is Ownable {
 
     ///// permissioned functions
 
-    // deploy a staking reward contract for the staking token, and store the reward amount
-    // the reward will be distributed to the staking reward contract no sooner than the genesis
+    /// Deploy a staking reward contract for the staking token, and store the reward amount.
+    /// The reward will be distributed to the staking reward contract no sooner than the genesis.
     function deploy(address stakingToken, uint rewardAmount) external onlyOwner {
         StakingRewardsInfo storage info = stakingRewardsInfoByStakingToken[stakingToken];
         require(info.stakingRewards == address(0), 'StakingRewardsFactory::deploy: already deployed');
@@ -47,7 +50,7 @@ contract StakingRewardsFactory is Ownable {
 
     ///// permissionless functions
 
-    // call notifyRewardAmount for all staking tokens.
+    /// Call notifyRewardAmount for all staking tokens.
     function notifyRewardAmounts() external {
         require(stakingTokens.length > 0, 'StakingRewardsFactory::notifyRewardAmounts: called before any deploys');
         for (uint i = 0; i < stakingTokens.length; i++) {
@@ -55,8 +58,8 @@ contract StakingRewardsFactory is Ownable {
         }
     }
 
-    // notify reward amount for an individual staking token.
-    // this is a fallback in case the notifyRewardAmounts costs too much gas to call for all contracts
+    /// Notify reward amount for an individual staking token.
+    /// This is a fallback in case the notifyRewardAmounts costs too much gas to call for all contracts.
     function notifyRewardAmount(address stakingToken) public {
         require(block.timestamp >= stakingRewardsGenesis, 'StakingRewardsFactory::notifyRewardAmount: not ready');
 
