@@ -4,11 +4,13 @@
   "private": "true",
   "scripts": {
     "compile": "waffle",
+    "coverage": "HARDHAT=true hardhat coverage",
     "deploy:testnet": "rm -rf build && truffle migrate --f 1 --to 1 --network ropsten",
     "deploy:mainnet": "rm -rf build && truffle migrate --f 1 --to 1 --network mainnet",
+    "docgen": "HARDHAT=true hardhat compile",
     "fund:testnet": "truffle migrate --f 2 --to 2 --network ropsten",
     "fund:mainnet": "truffle migrate --f 2 --to 2 --network mainnet",
-    "test": "mocha"
+    "test": "yarn compile && mocha"
   },
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.3.0",
@@ -24,5 +26,14 @@
     "mocha": "^8.1.3",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@types/node": "^16.11.10",
+    "hardhat": "^2.6.8",
+    "hardhat-docgen": "^1.2.0",
+    "solidity-coverage": "^0.7.17",
+    "solidity-docgen": "^0.5.16"
   }
 }

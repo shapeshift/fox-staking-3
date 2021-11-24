@@ -1,24 +1,13 @@
-import chai, { expect } from 'chai'
-import { Contract, BigNumber } from 'ethers'
-import { solidity, MockProvider, createFixtureLoader } from 'ethereum-waffle'
+import type { Contract, BigNumber } from 'ethers'
 
 import { stakingRewardsFactoryFixture } from './fixtures'
-import { mineBlock } from './utils'
+import { mineBlock, setupTests } from './utils'
 
-import StakingRewards from '../build/StakingRewards.json'
-
-chai.use(solidity)
+const { expect, ethers, waffle, provider, StakingRewards } = setupTests()
 
 describe('StakingRewardsFactory', () => {
-  const provider = new MockProvider({
-    ganacheOptions: {
-      hardfork: 'istanbul',
-      mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
-      gasLimit: 9999999,
-    },
-  })
   const [wallet, wallet1] = provider.getWallets()
-  const loadFixture = createFixtureLoader([wallet], provider)
+  const loadFixture = waffle.createFixtureLoader([wallet], provider)
 
   let rewardsToken: Contract
   let genesis: number
@@ -35,9 +24,9 @@ describe('StakingRewardsFactory', () => {
     stakingTokens = fixture.stakingTokens
   })
 
-  it('deployment gas', async () => {
+  it('deployment gas [ @skip-on-coverage ]', async () => {
     const receipt = await provider.getTransactionReceipt(stakingRewardsFactory.deployTransaction.hash)
-    expect(receipt.gasUsed).to.eq('2150613')
+    expect(receipt.gasUsed).to.eq('2150601')
   })
 
   describe('#deploy', () => {
@@ -73,7 +62,7 @@ describe('StakingRewardsFactory', () => {
       const [stakingRewardsAddress] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(
         stakingTokens[1].address
       )
-      const stakingRewards = new Contract(stakingRewardsAddress, StakingRewards.abi, provider)
+      const stakingRewards = new ethers.Contract(stakingRewardsAddress, StakingRewards.abi, provider)
       expect(await stakingRewards.rewardsDistribution()).to.eq(stakingRewardsFactory.address)
       expect(await stakingRewards.stakingToken()).to.eq(stakingTokens[1].address)
       expect(await stakingRewards.rewardsToken()).to.eq(rewardsToken.address)
@@ -84,7 +73,7 @@ describe('StakingRewardsFactory', () => {
     let totalRewardAmount: BigNumber
 
     beforeEach(() => {
-      totalRewardAmount = rewardAmounts.reduce((accumulator, current) => accumulator.add(current), BigNumber.from(0))
+      totalRewardAmount = rewardAmounts.reduce((accumulator, current) => accumulator.add(current), ethers.BigNumber.from(0))
     })
 
     it('called before any deploys', async () => {
@@ -102,11 +91,11 @@ describe('StakingRewardsFactory', () => {
           const [stakingRewardsAddress] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(
             stakingTokens[i].address
           )
-          stakingRewards.push(new Contract(stakingRewardsAddress, StakingRewards.abi, provider))
+          stakingRewards.push(new ethers.Contract(stakingRewardsAddress, StakingRewards.abi, provider))
         }
       })
 
-      it('gas', async () => {
+      it('gas [ @skip-on-coverage ]', async () => {
         await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
         await mineBlock(provider, genesis)
         const tx = await stakingRewardsFactory.notifyRewardAmounts()

@@ -1,23 +1,12 @@
-import chai, { expect } from 'chai'
-import { Contract, BigNumber, constants } from 'ethers'
-import { solidity, MockProvider, createFixtureLoader, deployContract } from 'ethereum-waffle'
+import type { Contract, BigNumber } from 'ethers'
 import { ecsign } from 'ethereumjs-util'
 
 import { stakingRewardsFixture } from './fixtures'
-import { REWARDS_DURATION, expandTo18Decimals, mineBlock, getApprovalDigest } from './utils'
+import { REWARDS_DURATION, expandTo18Decimals, mineBlock, getApprovalDigest, setupTests } from './utils'
 
-import StakingRewards from '../build/StakingRewards.json'
-
-chai.use(solidity)
+const { expect, ethers: { constants }, waffle: { createFixtureLoader, deployContract }, provider, StakingRewards } = setupTests()
 
 describe('StakingRewards', () => {
-  const provider = new MockProvider({
-    ganacheOptions: {
-      hardfork: 'istanbul',
-      mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
-      gasLimit: 9999999,
-    },
-  })
   const [wallet, staker, secondStaker] = provider.getWallets()
   const loadFixture = createFixtureLoader([wallet], provider)
 
@@ -31,14 +20,14 @@ describe('StakingRewards', () => {
     stakingToken = fixture.stakingToken
   })
 
-  it('deploy cost', async () => {
+  it('deploy cost [ @skip-on-coverage ]', async () => {
     const stakingRewards = await deployContract(wallet, StakingRewards, [
       wallet.address,
       rewardsToken.address,
       stakingToken.address,
     ])
     const receipt = await provider.getTransactionReceipt(stakingRewards.deployTransaction.hash)
-    expect(receipt.gasUsed).to.eq('1467582')
+    expect(receipt.gasUsed).to.eq('1467570')
   })
 
   it('rewardsDuration', async () => {
@@ -81,7 +70,7 @@ describe('StakingRewards', () => {
     expect(rewardAmount).to.be.eq(reward.div(REWARDS_DURATION).mul(REWARDS_DURATION))
   })
 
-  it('stakeWithPermit', async () => {
+  it('stakeWithPermit [ @skip-on-coverage ]', async () => {
     // stake with staker
     const stake = expandTo18Decimals(2)
     await stakingToken.transfer(staker.address, stake)
@@ -114,7 +103,7 @@ describe('StakingRewards', () => {
     expect(rewardAmount).to.be.eq(reward.div(REWARDS_DURATION).mul(REWARDS_DURATION))
   })
 
-  it('notifyRewardAmount: ~half', async () => {
+  it('notifyRewardAmount: ~half [ @skip-on-coverage ]', async () => {
     const { startTime, endTime } = await start(reward)
 
     // fast-forward ~halfway through the reward window

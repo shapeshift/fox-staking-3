@@ -1,15 +1,10 @@
-import chai from 'chai'
-import { Contract, Wallet, BigNumber, providers } from 'ethers'
-import { solidity, deployContract } from 'ethereum-waffle'
+import type { Contract, Wallet, BigNumber, providers } from 'ethers'
 
-import { expandTo18Decimals } from './utils'
+import { expandTo18Decimals, setupTests } from './utils'
 
 import UniswapV2ERC20 from '@uniswap/v2-core/build/ERC20.json'
-import TestERC20 from '../build/TestERC20.json'
-import StakingRewards from '../build/StakingRewards.json'
-import StakingRewardsFactory from '../build/StakingRewardsFactory.json'
 
-chai.use(solidity)
+const { waffle: { deployContract }, StakingRewards, StakingRewardsFactory, TestERC20 } = setupTests()
 
 const NUMBER_OF_STAKING_TOKENS = 4
 

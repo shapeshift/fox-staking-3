@@ -60,3 +60,48 @@ export function expandTo18Decimals(n: number): BigNumber {
 export async function mineBlock(provider: providers.Web3Provider, timestamp: number): Promise<void> {
   return provider.send('evm_mine', [timestamp])
 }
+
+export function setupTests() {
+  const chai = require('chai')
+  if (process.env.HARDHAT) {
+    const { ethers, waffle } = require('hardhat')
+    const { provider } = waffle
+    const stakingRewardsPath = '../artifacts/contracts/StakingRewards.sol/StakingRewards.json'
+    const stakingRewardsFactoryPath = '../artifacts/contracts/StakingRewardsFactory.sol/StakingRewardsFactory.json'
+    const testERC20Path = '../artifacts/contracts/test/TestERC20.sol/TestERC20.json'
+    return {
+      expect: chai.expect,
+      ethers,
+      waffle,
+      provider,
+      StakingRewards: require(stakingRewardsPath),
+      StakingRewardsFactory: require(stakingRewardsFactoryPath),
+      TestERC20: require(testERC20Path),
+      isHardhat: true,
+    }
+  } else {
+    const ethers = require('ethers')
+    const waffle = require('ethereum-waffle')
+    const provider = new waffle.MockProvider({
+      ganacheOptions: {
+        hardfork: 'istanbul',
+        mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
+        gasLimit: 9999999,
+      },
+    })
+    const stakingRewardsPath = '../build/StakingRewards.json'
+    const stakingRewardsFactoryPath = '../build/StakingRewardsFactory.json'
+    const testERC20Path = '../build/TestERC20.json'
+    chai.use(waffle.solidity)
+    return {
+      expect: chai.expect,
+      ethers,
+      waffle,
+      provider,
+      StakingRewards: require(stakingRewardsPath),
+      StakingRewardsFactory: require(stakingRewardsFactoryPath),
+      TestERC20: require(testERC20Path),
+      isHardhat: false,
+    }
+  }
+}
