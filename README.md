@@ -1,6 +1,8 @@
 # Staker
 Farming contract based on https://github.com/Uniswap/liquidity-staker; currently deployed at [0xc54B9F82C1c54E9D4d274d633c7523f2299c42A0](https://etherscan.io/address/0xc54B9F82C1c54E9D4d274d633c7523f2299c42A0) on Ethereum Mainnet. The contract code is immutable, and there are no special access privileges (i.e. contract ownership) that would permit them to be altered or the rewards shut down.
 
+Each deployment of a contract instance runs for a fixed time period ([135 days](https://github.com/shapeshift/fox-staking-unified-history/blob/217912645f7ac4cb07e33a22ae5469c8f2ffc697/contracts/StakingRewards.sol#L27) for the current instance). This helps limit the damage that any attacker can cause, while also ensuring those who stake their tokens that the funds designated for rewards are fully committed to that purpose and cannot be revoked or reclaimed by the deployer. In the event of any emergency, users should unstake their tokens, after which they may choose to re-stake them in a newly-deployed, fixed contract instance.
+
 [Docs](https://raw.githack.com/shapeshift/fox-staking-unified-history/master/docs/index.html) / [Test Coverage](https://raw.githack.com/shapeshift/fox-staking-unified-history/master/coverage/index.html)
 
 1. install truffle globally `npm install -g truffle`
