@@ -11,11 +11,10 @@
     "console": "npx hardhat console",
     "coverage": "npx hardhat coverage --temp artifacts",
     "deploy": "npx hardhat deploy",
-    "lint": "yarn run prettier && yarn run lint:ts && yarn run lint:solidity",
+    "lint": "yarn run prettier && yarn run lint:ts",
     "lint:ts": "npx eslint '**/*.{js,ts}'",
-    "lint:solidity": "npx solhint src/**/*.sol",
-    "lint:fix": "npx solhint src/**/*.sol --fix && npx eslint '**/*.{js,ts}' --fix",
-    "prettier": "npx prettier '**/*.{json,sol,md}' --write",
+    "lint:fix": "npx eslint '**/*.{js,ts}' --fix",
+    "prettier": "npx prettier '**/*.{json,md}' --write",
     "test": "npx hardhat test"
   },
   "dependencies": {

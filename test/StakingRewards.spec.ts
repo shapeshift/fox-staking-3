@@ -107,7 +107,7 @@ describe('StakingRewards', () => {
     // stake with staker
     const stake = expandTo18Decimals(2)
     await stakingToken.transfer(temporaryStakerWallet.address, stake)
-    await accounts[1].sendTransaction({to: temporaryStakerWallet.address, value:ethers.utils.parseEther("10")});
+    await accounts[1].sendTransaction({to: temporaryStakerWallet.address, value:ethers.utils.parseEther("5000")});
 
     // get permit
     const nonce = await (stakingToken as Contract).nonces(temporaryStakerWallet.address);
