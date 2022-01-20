@@ -1,13 +1,14 @@
 import { ethers, deployments, getNamedAccounts } from "hardhat";
 import { expect } from "chai";
 import { StakingRewardsFactory} from "../typechain-types/StakingRewardsFactory";
-import StakingRewards  from "../artifacts/contracts/StakingRewards.sol/StakingRewards.json";
+import { StakingRewards } from "../typechain-types/StakingRewards";
+import StakingRewardsArtifact  from "../artifacts/contracts/StakingRewards.sol/StakingRewards.json";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { TestERC20 } from "../typechain-types/TestERC20";
 
 import { BigNumber, Signer } from "ethers";
 
-import { mineBlock, setupTests } from './utils'
+import { expandTo18Decimals, mineBlock, setupTests } from './utils'
 import { solidity } from "ethereum-waffle"; 
 
 //const { expect, ethers, waffle, provider, StakingRewards } = setupTests()
@@ -104,7 +105,7 @@ describe('StakingRewardsFactory', () => {
       )
       
       const stakingRewards = new ethers.Contract(stakingRewardsInfo.stakingRewards, 
-        StakingRewards.abi, accounts[0]);
+        StakingRewardsArtifact.abi, accounts[0]);
       
       expect(await stakingRewards.rewardsDistribution()).to.eq(stakingRewardsFactory.address)
       expect(await stakingRewards.stakingToken()).to.eq(stakingToken.address)
@@ -112,96 +113,106 @@ describe('StakingRewardsFactory', () => {
     })
   })
 
-  // describe('#notifyRewardsAmounts', () => {
-  //   let totalRewardAmount: BigNumber
+  describe('#notifyRewardsAmounts', () => {
 
-  //   beforeEach(() => {
-  //     totalRewardAmount = rewardAmounts.reduce((accumulator, current) => accumulator.add(current), ethers.BigNumber.from(0))
-  //   })
+    it('called before any deploys', async () => {
+      await expect(stakingRewardsFactory.notifyRewardAmounts()).to.be.revertedWith(
+        'StakingRewardsFactory::notifyRewardAmounts: called before any deploys'
+      )
+    })
 
-  //   it('called before any deploys', async () => {
-  //     await expect(stakingRewardsFactory.notifyRewardAmounts()).to.be.revertedWith(
-  //       'StakingRewardsFactory::notifyRewardAmounts: called before any deploys'
-  //     )
-  //   })
+    describe('after deploying all staking reward contracts', async () => {
+      
+      const nTokens = 4;
+      const rewardAmountPerToken = expandTo18Decimals(1000); // 1000  tokens w/ 18 decimals
+      const totalRewardAmount = rewardAmountPerToken.mul(nTokens);
+      let stakingRewards: StakingRewards[]
+      let stakingTokens: TestERC20[];
+      let genesis: BigNumber;
 
-  //   describe('after deploying all staking reward contracts', async () => {
-  //     let stakingRewards: Contract[]
-  //     beforeEach('deploy staking reward contracts', async () => {
-  //       stakingRewards = []
-  //       for (let i = 0; i < stakingTokens.length; i++) {
-  //         await stakingRewardsFactory.deploy(stakingTokens[i].address, rewardAmounts[i])
-  //         const [stakingRewardsAddress] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(
-  //           stakingTokens[i].address
-  //         )
-  //         stakingRewards.push(new ethers.Contract(stakingRewardsAddress, StakingRewards.abi, provider))
-  //       }
-  //     })
+      beforeEach('deploy staking reward contracts', async () => {
+        const tokenFactory = await ethers.getContractFactory("TestERC20");
+        const totalSupply = await stakingToken.totalSupply();
+        genesis = await stakingRewardsFactory.stakingRewardsGenesis();
+        stakingRewards = []; // reset array
+        stakingTokens = [];
+        for (let i = 0; i < nTokens; i++) {
+          const newStakingToken = await tokenFactory.deploy(totalSupply);
+          await newStakingToken.deployed();
+          stakingTokens[i] = newStakingToken as TestERC20;
 
-  //     it('gas [ @skip-on-coverage ]', async () => {
-  //       await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
-  //       await mineBlock(provider, genesis)
-  //       const tx = await stakingRewardsFactory.notifyRewardAmounts()
-  //       const receipt = await tx.wait()
-  //       expect(receipt.gasUsed).to.eq('416735')
-  //     })
+          await stakingRewardsFactory.deploy(newStakingToken.address, rewardAmountPerToken);
+          const [stakingRewardsAddress] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(
+            stakingTokens[i].address
+          )
+          stakingRewards.push(new ethers.Contract(stakingRewardsAddress, StakingRewardsArtifact.abi, accounts[0]) as StakingRewards)
+        }
+      })
 
-  //     it('no op if called twice', async () => {
-  //       await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
-  //       await mineBlock(provider, genesis)
-  //       await expect(stakingRewardsFactory.notifyRewardAmounts()).to.emit(rewardsToken, 'Transfer')
-  //       await expect(stakingRewardsFactory.notifyRewardAmounts()).to.not.emit(rewardsToken, 'Transfer')
-  //     })
+      it('gas [ @skip-on-coverage ]', async () => {
+        await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
+        await mineBlock(ethers.provider, genesis.toNumber());
+        const tx = await stakingRewardsFactory.notifyRewardAmounts()
+        const receipt = await tx.wait()
+        expect(receipt.gasUsed).to.eq('486635')
+      })
 
-  //     it('fails if called without sufficient balance', async () => {
-  //       await mineBlock(provider, genesis)
-  //       await expect(stakingRewardsFactory.notifyRewardAmounts()).to.be.revertedWith(
-  //         'ERC20: transfer amount exceeds balance' // emitted from rewards token
-  //       )
-  //     })
+      it('no op if called twice', async () => {
+        await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
+        await mineBlock(ethers.provider, genesis.toNumber());
+        await expect(stakingRewardsFactory.notifyRewardAmounts()).to.emit(rewardsToken, 'Transfer')
+        await expect(stakingRewardsFactory.notifyRewardAmounts()).to.not.emit(rewardsToken, 'Transfer')
+      })
 
-  //     it('calls notifyRewards on each contract', async () => {
-  //       await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
-  //       await mineBlock(provider, genesis)
-  //       await expect(stakingRewardsFactory.notifyRewardAmounts())
-  //         .to.emit(stakingRewards[0], 'RewardAdded')
-  //         .withArgs(rewardAmounts[0])
-  //         .to.emit(stakingRewards[1], 'RewardAdded')
-  //         .withArgs(rewardAmounts[1])
-  //         .to.emit(stakingRewards[2], 'RewardAdded')
-  //         .withArgs(rewardAmounts[2])
-  //         .to.emit(stakingRewards[3], 'RewardAdded')
-  //         .withArgs(rewardAmounts[3])
-  //     })
+      it('fails if called without sufficient balance', async () => {
+        await mineBlock(ethers.provider, genesis.toNumber());
+        await expect(stakingRewardsFactory.notifyRewardAmounts()).to.be.revertedWith(
+          'ERC20: transfer amount exceeds balance' // emitted from rewards token
+        )
+      })
 
-  //     it('transfers the reward tokens to the individual contracts', async () => {
-  //       await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
-  //       await mineBlock(provider, genesis)
-  //       await stakingRewardsFactory.notifyRewardAmounts()
-  //       for (let i = 0; i < rewardAmounts.length; i++) {
-  //         expect(await rewardsToken.balanceOf(stakingRewards[i].address)).to.eq(rewardAmounts[i])
-  //       }
-  //     })
+      it('calls notifyRewards on each contract', async () => {
+        await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
+        await mineBlock(ethers.provider, genesis.toNumber());
+        await expect(stakingRewardsFactory.notifyRewardAmounts())
+          .to.emit(stakingRewards[0], 'RewardAdded')
+          .withArgs(rewardAmountPerToken)
+          .to.emit(stakingRewards[1], 'RewardAdded')
+          .withArgs(rewardAmountPerToken)
+          .to.emit(stakingRewards[2], 'RewardAdded')
+          .withArgs(rewardAmountPerToken)
+          .to.emit(stakingRewards[3], 'RewardAdded')
+          .withArgs(rewardAmountPerToken)
+      })
 
-  //     it('sets rewardAmount to 0', async () => {
-  //       await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
-  //       await mineBlock(provider, genesis)
-  //       for (let i = 0; i < stakingTokens.length; i++) {
-  //         const [, amount] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(stakingTokens[i].address)
-  //         expect(amount).to.eq(rewardAmounts[i])
-  //       }
-  //       await stakingRewardsFactory.notifyRewardAmounts()
-  //       for (let i = 0; i < stakingTokens.length; i++) {
-  //         const [, amount] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(stakingTokens[i].address)
-  //         expect(amount).to.eq(0)
-  //       }
-  //     })
+      it('transfers the reward tokens to the individual contracts', async () => {
+        await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
+        await mineBlock(ethers.provider, genesis.toNumber());
+        await stakingRewardsFactory.notifyRewardAmounts()
+        for (let i = 0; i < nTokens; i++) {
+          expect(await rewardsToken.balanceOf(stakingRewards[i].address)).to.eq(rewardAmountPerToken)
+        }
+      })
 
-  //     it('succeeds when has sufficient balance and after genesis time', async () => {
-  //       await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
-  //       await mineBlock(provider, genesis)
-  //       await stakingRewardsFactory.notifyRewardAmounts()
-  //     })
-  //   })
-  // })
+      it('sets rewardAmount to 0', async () => {
+        await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
+        await mineBlock(ethers.provider, genesis.toNumber());
+        for (let i = 0; i < stakingTokens.length; i++) {
+          const [, amount] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(stakingTokens[i].address)
+          expect(amount).to.eq(rewardAmountPerToken)
+        }
+        await stakingRewardsFactory.notifyRewardAmounts()
+        for (let i = 0; i < stakingTokens.length; i++) {
+          const [, amount] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(stakingTokens[i].address)
+          expect(amount).to.eq(0)
+        }
+      })
+
+      it('succeeds when has sufficient balance and after genesis time', async () => {
+        await rewardsToken.transfer(stakingRewardsFactory.address, totalRewardAmount)
+        await mineBlock(ethers.provider, genesis.toNumber());
+        await stakingRewardsFactory.notifyRewardAmounts()
+      })
+    })
+  })
 })

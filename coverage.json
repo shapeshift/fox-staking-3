@@ -1,1 +1,866 @@
-{"contracts/RewardsDistributionRecipient.sol":{"l":{"9":289,"10":289},"path":"/home/doctor_mora_pol/dev/fox-staking-unified-history/contracts/RewardsDistributionRecipient.sol","s":{"1":289},"b":{"1":[289,0]},"f":{"1":289},"fnMap":{"1":{"name":"onlyRewardsDistribution","line":8,"loc":{"start":{"line":8,"column":4},"end":{"line":11,"column":4}}}},"statementMap":{"1":{"start":{"line":9,"column":8},"end":{"line":9,"column":95}}},"branchMap":{"1":{"line":9,"type":"if","locations":[{"start":{"line":9,"column":8},"end":{"line":9,"column":8}},{"start":{"line":9,"column":8},"end":{"line":9,"column":8}}]}}},"contracts/StakingRewards.sol":{"l":{"49":85,"50":85,"51":85,"58":0,"63":0,"68":606,"73":595,"74":430,"76":165,"84":152,"89":0,"96":13,"97":13,"98":13,"101":13,"103":13,"104":11,"109":37,"110":37,"111":37,"112":37,"113":33,"118":52,"119":52,"120":52,"121":52,"122":52,"127":50,"128":50,"129":50,"130":50,"131":47,"137":52,"138":52,"145":289,"146":289,"148":0,"149":0,"150":0,"157":289,"158":289,"160":289,"161":284,"162":274,"168":443,"169":441,"170":441,"171":152,"172":152,"174":441},"path":"/home/doctor_mora_pol/dev/fox-staking-unified-history/contracts/StakingRewards.sol","s":{"1":85,"2":85,"3":85,"4":0,"5":0,"6":606,"7":595,"8":430,"9":165,"10":152,"11":0,"12":13,"13":13,"14":13,"15":13,"16":13,"17":11,"18":37,"19":37,"20":37,"21":37,"22":33,"23":52,"24":52,"25":52,"26":52,"27":52,"28":50,"29":50,"30":50,"31":50,"32":47,"33":52,"34":52,"35":289,"36":289,"37":0,"38":0,"39":0,"40":289,"41":289,"42":289,"43":284,"44":274,"45":443,"46":441,"47":441,"48":152,"49":152},"b":{"1":[430,165],"2":[13,0],"3":[37,0],"4":[52,0],"5":[50,0],"6":[289,0],"7":[289,0],"8":[152,289]},"f":{"1":85,"2":0,"3":0,"4":606,"5":595,"6":152,"7":0,"8":13,"9":37,"10":52,"11":50,"12":52,"13":289,"14":443},"fnMap":{"1":{"name":"constructor","line":44,"loc":{"start":{"line":44,"column":4},"end":{"line":52,"column":4}}},"2":{"name":"totalSupply","line":57,"loc":{"start":{"line":57,"column":4},"end":{"line":59,"column":4}}},"3":{"name":"balanceOf","line":62,"loc":{"start":{"line":62,"column":4},"end":{"line":64,"column":4}}},"4":{"name":"lastTimeRewardApplicable","line":67,"loc":{"start":{"line":67,"column":4},"end":{"line":69,"column":4}}},"5":{"name":"rewardPerToken","line":72,"loc":{"start":{"line":72,"column":4},"end":{"line":80,"column":4}}},"6":{"name":"earned","line":83,"loc":{"start":{"line":83,"column":4},"end":{"line":85,"column":4}}},"7":{"name":"getRewardForDuration","line":88,"loc":{"start":{"line":88,"column":4},"end":{"line":90,"column":4}}},"8":{"name":"stakeWithPermit","line":95,"loc":{"start":{"line":95,"column":4},"end":{"line":105,"column":4}}},"9":{"name":"stake","line":108,"loc":{"start":{"line":108,"column":4},"end":{"line":114,"column":4}}},"10":{"name":"withdraw","line":117,"loc":{"start":{"line":117,"column":4},"end":{"line":123,"column":4}}},"11":{"name":"getReward","line":126,"loc":{"start":{"line":126,"column":4},"end":{"line":133,"column":4}}},"12":{"name":"exit","line":136,"loc":{"start":{"line":136,"column":4},"end":{"line":139,"column":4}}},"13":{"name":"notifyRewardAmount","line":144,"loc":{"start":{"line":144,"column":4},"end":{"line":163,"column":4}}},"14":{"name":"updateReward","line":167,"loc":{"start":{"line":167,"column":4},"end":{"line":175,"column":4}}}},"statementMap":{"1":{"start":{"line":49,"column":8},"end":{"line":49,"column":43}},"2":{"start":{"line":50,"column":8},"end":{"line":50,"column":43}},"3":{"start":{"line":51,"column":8},"end":{"line":51,"column":49}},"4":{"start":{"line":58,"column":8},"end":{"line":58,"column":27}},"5":{"start":{"line":63,"column":8},"end":{"line":63,"column":33}},"6":{"start":{"line":68,"column":8},"end":{"line":68,"column":54}},"7":{"start":{"line":73,"column":8},"end":{"line":73,"column":2903}},"8":{"start":{"line":74,"column":12},"end":{"line":74,"column":39}},"9":{"start":{"line":76,"column":8},"end":{"line":76,"column":2992}},"10":{"start":{"line":84,"column":8},"end":{"line":84,"column":124}},"11":{"start":{"line":89,"column":8},"end":{"line":89,"column":46}},"12":{"start":{"line":96,"column":8},"end":{"line":96,"column":44}},"13":{"start":{"line":97,"column":8},"end":{"line":97,"column":46}},"14":{"start":{"line":98,"column":8},"end":{"line":98,"column":64}},"15":{"start":{"line":101,"column":8},"end":{"line":101,"column":106}},"16":{"start":{"line":103,"column":8},"end":{"line":103,"column":71}},"17":{"start":{"line":104,"column":8},"end":{"line":104,"column":39}},"18":{"start":{"line":109,"column":8},"end":{"line":109,"column":44}},"19":{"start":{"line":110,"column":8},"end":{"line":110,"column":46}},"20":{"start":{"line":111,"column":8},"end":{"line":111,"column":64}},"21":{"start":{"line":112,"column":8},"end":{"line":112,"column":71}},"22":{"start":{"line":113,"column":8},"end":{"line":113,"column":39}},"23":{"start":{"line":118,"column":8},"end":{"line":118,"column":47}},"24":{"start":{"line":119,"column":8},"end":{"line":119,"column":46}},"25":{"start":{"line":120,"column":8},"end":{"line":120,"column":64}},"26":{"start":{"line":121,"column":8},"end":{"line":121,"column":52}},"27":{"start":{"line":122,"column":8},"end":{"line":122,"column":42}},"28":{"start":{"line":127,"column":8},"end":{"line":127,"column":44}},"29":{"start":{"line":128,"column":8},"end":{"line":128,"column":5352}},"30":{"start":{"line":129,"column":12},"end":{"line":129,"column":34}},"31":{"start":{"line":130,"column":12},"end":{"line":130,"column":56}},"32":{"start":{"line":131,"column":12},"end":{"line":131,"column":47}},"33":{"start":{"line":137,"column":8},"end":{"line":137,"column":38}},"34":{"start":{"line":138,"column":8},"end":{"line":138,"column":18}},"35":{"start":{"line":145,"column":8},"end":{"line":145,"column":5957}},"36":{"start":{"line":146,"column":12},"end":{"line":146,"column":51}},"37":{"start":{"line":148,"column":12},"end":{"line":148,"column":65}},"38":{"start":{"line":149,"column":12},"end":{"line":149,"column":56}},"39":{"start":{"line":150,"column":12},"end":{"line":150,"column":65}},"40":{"start":{"line":157,"column":8},"end":{"line":157,"column":60}},"41":{"start":{"line":158,"column":8},"end":{"line":158,"column":86}},"42":{"start":{"line":160,"column":8},"end":{"line":160,"column":39}},"43":{"start":{"line":161,"column":8},"end":{"line":161,"column":58}},"44":{"start":{"line":162,"column":8},"end":{"line":162,"column":32}},"45":{"start":{"line":168,"column":8},"end":{"line":168,"column":46}},"46":{"start":{"line":169,"column":8},"end":{"line":169,"column":50}},"47":{"start":{"line":170,"column":8},"end":{"line":170,"column":7109}},"48":{"start":{"line":171,"column":12},"end":{"line":171,"column":45}},"49":{"start":{"line":172,"column":12},"end":{"line":172,"column":65}}},"branchMap":{"1":{"line":73,"type":"if","locations":[{"start":{"line":73,"column":8},"end":{"line":73,"column":8}},{"start":{"line":73,"column":8},"end":{"line":73,"column":8}}]},"2":{"line":96,"type":"if","locations":[{"start":{"line":96,"column":8},"end":{"line":96,"column":8}},{"start":{"line":96,"column":8},"end":{"line":96,"column":8}}]},"3":{"line":109,"type":"if","locations":[{"start":{"line":109,"column":8},"end":{"line":109,"column":8}},{"start":{"line":109,"column":8},"end":{"line":109,"column":8}}]},"4":{"line":118,"type":"if","locations":[{"start":{"line":118,"column":8},"end":{"line":118,"column":8}},{"start":{"line":118,"column":8},"end":{"line":118,"column":8}}]},"5":{"line":128,"type":"if","locations":[{"start":{"line":128,"column":8},"end":{"line":128,"column":8}},{"start":{"line":128,"column":8},"end":{"line":128,"column":8}}]},"6":{"line":145,"type":"if","locations":[{"start":{"line":145,"column":8},"end":{"line":145,"column":8}},{"start":{"line":145,"column":8},"end":{"line":145,"column":8}}]},"7":{"line":158,"type":"if","locations":[{"start":{"line":158,"column":8},"end":{"line":158,"column":8}},{"start":{"line":158,"column":8},"end":{"line":158,"column":8}}]},"8":{"line":170,"type":"if","locations":[{"start":{"line":170,"column":8},"end":{"line":170,"column":8}},{"start":{"line":170,"column":8},"end":{"line":170,"column":8}}]}}},"contracts/StakingRewardsFactory.sol":{"l":{"32":1,"34":1,"35":1,"43":85,"44":85,"46":84,"47":84,"48":84,"55":75,"56":74,"57":293,"64":293,"66":293,"67":293,"69":293,"70":281,"71":281,"73":281,"77":280},"path":"/home/doctor_mora_pol/dev/fox-staking-unified-history/contracts/StakingRewardsFactory.sol","s":{"1":1,"2":1,"3":1,"4":85,"5":85,"6":84,"7":84,"8":84,"9":75,"10":74,"11":293,"12":293,"13":293,"14":293,"15":293,"16":281,"17":281,"18":281,"19":280},"b":{"1":[1,0],"2":[84,1],"3":[74,1],"4":[293,0],"5":[293,0],"6":[281,12],"7":[280,1]},"f":{"1":1,"2":85,"3":75,"4":293},"fnMap":{"1":{"name":"constructor","line":31,"loc":{"start":{"line":28,"column":4},"end":{"line":36,"column":4}}},"2":{"name":"deploy","line":42,"loc":{"start":{"line":42,"column":4},"end":{"line":49,"column":4}}},"3":{"name":"notifyRewardAmounts","line":54,"loc":{"start":{"line":54,"column":4},"end":{"line":59,"column":4}}},"4":{"name":"notifyRewardAmount","line":63,"loc":{"start":{"line":63,"column":4},"end":{"line":79,"column":4}}}},"statementMap":{"1":{"start":{"line":32,"column":8},"end":{"line":32,"column":113}},"2":{"start":{"line":34,"column":8},"end":{"line":34,"column":35}},"3":{"start":{"line":35,"column":8},"end":{"line":35,"column":53}},"4":{"start":{"line":43,"column":8},"end":{"line":43,"column":88}},"5":{"start":{"line":44,"column":8},"end":{"line":44,"column":100}},"6":{"start":{"line":46,"column":8},"end":{"line":46,"column":125}},"7":{"start":{"line":47,"column":8},"end":{"line":47,"column":39}},"8":{"start":{"line":48,"column":8},"end":{"line":48,"column":39}},"9":{"start":{"line":55,"column":8},"end":{"line":55,"column":113}},"10":{"start":{"line":56,"column":8},"end":{"line":56,"column":2266}},"11":{"start":{"line":57,"column":12},"end":{"line":57,"column":47}},"12":{"start":{"line":64,"column":8},"end":{"line":64,"column":112}},"13":{"start":{"line":66,"column":8},"end":{"line":66,"column":88}},"14":{"start":{"line":67,"column":8},"end":{"line":67,"column":108}},"15":{"start":{"line":69,"column":8},"end":{"line":69,"column":2939}},"16":{"start":{"line":70,"column":12},"end":{"line":70,"column":49}},"17":{"start":{"line":71,"column":12},"end":{"line":71,"column":32}},"18":{"start":{"line":73,"column":12},"end":{"line":73,"column":3071}},"19":{"start":{"line":77,"column":12},"end":{"line":77,"column":79}}},"branchMap":{"1":{"line":32,"type":"if","locations":[{"start":{"line":32,"column":8},"end":{"line":32,"column":8}},{"start":{"line":32,"column":8},"end":{"line":32,"column":8}}]},"2":{"line":44,"type":"if","locations":[{"start":{"line":44,"column":8},"end":{"line":44,"column":8}},{"start":{"line":44,"column":8},"end":{"line":44,"column":8}}]},"3":{"line":55,"type":"if","locations":[{"start":{"line":55,"column":8},"end":{"line":55,"column":8}},{"start":{"line":55,"column":8},"end":{"line":55,"column":8}}]},"4":{"line":64,"type":"if","locations":[{"start":{"line":64,"column":8},"end":{"line":64,"column":8}},{"start":{"line":64,"column":8},"end":{"line":64,"column":8}}]},"5":{"line":67,"type":"if","locations":[{"start":{"line":67,"column":8},"end":{"line":67,"column":8}},{"start":{"line":67,"column":8},"end":{"line":67,"column":8}}]},"6":{"line":69,"type":"if","locations":[{"start":{"line":69,"column":8},"end":{"line":69,"column":8}},{"start":{"line":69,"column":8},"end":{"line":69,"column":8}}]},"7":{"line":73,"type":"if","locations":[{"start":{"line":73,"column":12},"end":{"line":73,"column":12}},{"start":{"line":73,"column":12},"end":{"line":73,"column":12}}]}}}}
+{
+  "contracts/RewardsDistributionRecipient.sol": {
+    "l": { "9": 289, "10": 289 },
+    "path": "/home/doctor_mora_pol/dev/fox-staking-unified-history/contracts/RewardsDistributionRecipient.sol",
+    "s": { "1": 289 },
+    "b": { "1": [289, 0] },
+    "f": { "1": 289 },
+    "fnMap": {
+      "1": {
+        "name": "onlyRewardsDistribution",
+        "line": 8,
+        "loc": {
+          "start": { "line": 8, "column": 4 },
+          "end": { "line": 11, "column": 4 }
+        }
+      }
+    },
+    "statementMap": {
+      "1": {
+        "start": { "line": 9, "column": 8 },
+        "end": { "line": 9, "column": 95 }
+      }
+    },
+    "branchMap": {
+      "1": {
+        "line": 9,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 9, "column": 8 },
+            "end": { "line": 9, "column": 8 }
+          },
+          {
+            "start": { "line": 9, "column": 8 },
+            "end": { "line": 9, "column": 8 }
+          }
+        ]
+      }
+    }
+  },
+  "contracts/StakingRewards.sol": {
+    "l": {
+      "49": 85,
+      "50": 85,
+      "51": 85,
+      "58": 0,
+      "63": 0,
+      "68": 606,
+      "73": 595,
+      "74": 430,
+      "76": 165,
+      "84": 152,
+      "89": 0,
+      "96": 13,
+      "97": 13,
+      "98": 13,
+      "101": 13,
+      "103": 13,
+      "104": 11,
+      "109": 37,
+      "110": 37,
+      "111": 37,
+      "112": 37,
+      "113": 33,
+      "118": 52,
+      "119": 52,
+      "120": 52,
+      "121": 52,
+      "122": 52,
+      "127": 50,
+      "128": 50,
+      "129": 50,
+      "130": 50,
+      "131": 47,
+      "137": 52,
+      "138": 52,
+      "145": 289,
+      "146": 289,
+      "148": 0,
+      "149": 0,
+      "150": 0,
+      "157": 289,
+      "158": 289,
+      "160": 289,
+      "161": 284,
+      "162": 274,
+      "168": 443,
+      "169": 441,
+      "170": 441,
+      "171": 152,
+      "172": 152,
+      "174": 441
+    },
+    "path": "/home/doctor_mora_pol/dev/fox-staking-unified-history/contracts/StakingRewards.sol",
+    "s": {
+      "1": 85,
+      "2": 85,
+      "3": 85,
+      "4": 0,
+      "5": 0,
+      "6": 606,
+      "7": 595,
+      "8": 430,
+      "9": 165,
+      "10": 152,
+      "11": 0,
+      "12": 13,
+      "13": 13,
+      "14": 13,
+      "15": 13,
+      "16": 13,
+      "17": 11,
+      "18": 37,
+      "19": 37,
+      "20": 37,
+      "21": 37,
+      "22": 33,
+      "23": 52,
+      "24": 52,
+      "25": 52,
+      "26": 52,
+      "27": 52,
+      "28": 50,
+      "29": 50,
+      "30": 50,
+      "31": 50,
+      "32": 47,
+      "33": 52,
+      "34": 52,
+      "35": 289,
+      "36": 289,
+      "37": 0,
+      "38": 0,
+      "39": 0,
+      "40": 289,
+      "41": 289,
+      "42": 289,
+      "43": 284,
+      "44": 274,
+      "45": 443,
+      "46": 441,
+      "47": 441,
+      "48": 152,
+      "49": 152
+    },
+    "b": {
+      "1": [430, 165],
+      "2": [13, 0],
+      "3": [37, 0],
+      "4": [52, 0],
+      "5": [50, 0],
+      "6": [289, 0],
+      "7": [289, 0],
+      "8": [152, 289]
+    },
+    "f": {
+      "1": 85,
+      "2": 0,
+      "3": 0,
+      "4": 606,
+      "5": 595,
+      "6": 152,
+      "7": 0,
+      "8": 13,
+      "9": 37,
+      "10": 52,
+      "11": 50,
+      "12": 52,
+      "13": 289,
+      "14": 443
+    },
+    "fnMap": {
+      "1": {
+        "name": "constructor",
+        "line": 44,
+        "loc": {
+          "start": { "line": 44, "column": 4 },
+          "end": { "line": 52, "column": 4 }
+        }
+      },
+      "2": {
+        "name": "totalSupply",
+        "line": 57,
+        "loc": {
+          "start": { "line": 57, "column": 4 },
+          "end": { "line": 59, "column": 4 }
+        }
+      },
+      "3": {
+        "name": "balanceOf",
+        "line": 62,
+        "loc": {
+          "start": { "line": 62, "column": 4 },
+          "end": { "line": 64, "column": 4 }
+        }
+      },
+      "4": {
+        "name": "lastTimeRewardApplicable",
+        "line": 67,
+        "loc": {
+          "start": { "line": 67, "column": 4 },
+          "end": { "line": 69, "column": 4 }
+        }
+      },
+      "5": {
+        "name": "rewardPerToken",
+        "line": 72,
+        "loc": {
+          "start": { "line": 72, "column": 4 },
+          "end": { "line": 80, "column": 4 }
+        }
+      },
+      "6": {
+        "name": "earned",
+        "line": 83,
+        "loc": {
+          "start": { "line": 83, "column": 4 },
+          "end": { "line": 85, "column": 4 }
+        }
+      },
+      "7": {
+        "name": "getRewardForDuration",
+        "line": 88,
+        "loc": {
+          "start": { "line": 88, "column": 4 },
+          "end": { "line": 90, "column": 4 }
+        }
+      },
+      "8": {
+        "name": "stakeWithPermit",
+        "line": 95,
+        "loc": {
+          "start": { "line": 95, "column": 4 },
+          "end": { "line": 105, "column": 4 }
+        }
+      },
+      "9": {
+        "name": "stake",
+        "line": 108,
+        "loc": {
+          "start": { "line": 108, "column": 4 },
+          "end": { "line": 114, "column": 4 }
+        }
+      },
+      "10": {
+        "name": "withdraw",
+        "line": 117,
+        "loc": {
+          "start": { "line": 117, "column": 4 },
+          "end": { "line": 123, "column": 4 }
+        }
+      },
+      "11": {
+        "name": "getReward",
+        "line": 126,
+        "loc": {
+          "start": { "line": 126, "column": 4 },
+          "end": { "line": 133, "column": 4 }
+        }
+      },
+      "12": {
+        "name": "exit",
+        "line": 136,
+        "loc": {
+          "start": { "line": 136, "column": 4 },
+          "end": { "line": 139, "column": 4 }
+        }
+      },
+      "13": {
+        "name": "notifyRewardAmount",
+        "line": 144,
+        "loc": {
+          "start": { "line": 144, "column": 4 },
+          "end": { "line": 163, "column": 4 }
+        }
+      },
+      "14": {
+        "name": "updateReward",
+        "line": 167,
+        "loc": {
+          "start": { "line": 167, "column": 4 },
+          "end": { "line": 175, "column": 4 }
+        }
+      }
+    },
+    "statementMap": {
+      "1": {
+        "start": { "line": 49, "column": 8 },
+        "end": { "line": 49, "column": 43 }
+      },
+      "2": {
+        "start": { "line": 50, "column": 8 },
+        "end": { "line": 50, "column": 43 }
+      },
+      "3": {
+        "start": { "line": 51, "column": 8 },
+        "end": { "line": 51, "column": 49 }
+      },
+      "4": {
+        "start": { "line": 58, "column": 8 },
+        "end": { "line": 58, "column": 27 }
+      },
+      "5": {
+        "start": { "line": 63, "column": 8 },
+        "end": { "line": 63, "column": 33 }
+      },
+      "6": {
+        "start": { "line": 68, "column": 8 },
+        "end": { "line": 68, "column": 54 }
+      },
+      "7": {
+        "start": { "line": 73, "column": 8 },
+        "end": { "line": 73, "column": 2903 }
+      },
+      "8": {
+        "start": { "line": 74, "column": 12 },
+        "end": { "line": 74, "column": 39 }
+      },
+      "9": {
+        "start": { "line": 76, "column": 8 },
+        "end": { "line": 76, "column": 2992 }
+      },
+      "10": {
+        "start": { "line": 84, "column": 8 },
+        "end": { "line": 84, "column": 124 }
+      },
+      "11": {
+        "start": { "line": 89, "column": 8 },
+        "end": { "line": 89, "column": 46 }
+      },
+      "12": {
+        "start": { "line": 96, "column": 8 },
+        "end": { "line": 96, "column": 44 }
+      },
+      "13": {
+        "start": { "line": 97, "column": 8 },
+        "end": { "line": 97, "column": 46 }
+      },
+      "14": {
+        "start": { "line": 98, "column": 8 },
+        "end": { "line": 98, "column": 64 }
+      },
+      "15": {
+        "start": { "line": 101, "column": 8 },
+        "end": { "line": 101, "column": 106 }
+      },
+      "16": {
+        "start": { "line": 103, "column": 8 },
+        "end": { "line": 103, "column": 71 }
+      },
+      "17": {
+        "start": { "line": 104, "column": 8 },
+        "end": { "line": 104, "column": 39 }
+      },
+      "18": {
+        "start": { "line": 109, "column": 8 },
+        "end": { "line": 109, "column": 44 }
+      },
+      "19": {
+        "start": { "line": 110, "column": 8 },
+        "end": { "line": 110, "column": 46 }
+      },
+      "20": {
+        "start": { "line": 111, "column": 8 },
+        "end": { "line": 111, "column": 64 }
+      },
+      "21": {
+        "start": { "line": 112, "column": 8 },
+        "end": { "line": 112, "column": 71 }
+      },
+      "22": {
+        "start": { "line": 113, "column": 8 },
+        "end": { "line": 113, "column": 39 }
+      },
+      "23": {
+        "start": { "line": 118, "column": 8 },
+        "end": { "line": 118, "column": 47 }
+      },
+      "24": {
+        "start": { "line": 119, "column": 8 },
+        "end": { "line": 119, "column": 46 }
+      },
+      "25": {
+        "start": { "line": 120, "column": 8 },
+        "end": { "line": 120, "column": 64 }
+      },
+      "26": {
+        "start": { "line": 121, "column": 8 },
+        "end": { "line": 121, "column": 52 }
+      },
+      "27": {
+        "start": { "line": 122, "column": 8 },
+        "end": { "line": 122, "column": 42 }
+      },
+      "28": {
+        "start": { "line": 127, "column": 8 },
+        "end": { "line": 127, "column": 44 }
+      },
+      "29": {
+        "start": { "line": 128, "column": 8 },
+        "end": { "line": 128, "column": 5352 }
+      },
+      "30": {
+        "start": { "line": 129, "column": 12 },
+        "end": { "line": 129, "column": 34 }
+      },
+      "31": {
+        "start": { "line": 130, "column": 12 },
+        "end": { "line": 130, "column": 56 }
+      },
+      "32": {
+        "start": { "line": 131, "column": 12 },
+        "end": { "line": 131, "column": 47 }
+      },
+      "33": {
+        "start": { "line": 137, "column": 8 },
+        "end": { "line": 137, "column": 38 }
+      },
+      "34": {
+        "start": { "line": 138, "column": 8 },
+        "end": { "line": 138, "column": 18 }
+      },
+      "35": {
+        "start": { "line": 145, "column": 8 },
+        "end": { "line": 145, "column": 5957 }
+      },
+      "36": {
+        "start": { "line": 146, "column": 12 },
+        "end": { "line": 146, "column": 51 }
+      },
+      "37": {
+        "start": { "line": 148, "column": 12 },
+        "end": { "line": 148, "column": 65 }
+      },
+      "38": {
+        "start": { "line": 149, "column": 12 },
+        "end": { "line": 149, "column": 56 }
+      },
+      "39": {
+        "start": { "line": 150, "column": 12 },
+        "end": { "line": 150, "column": 65 }
+      },
+      "40": {
+        "start": { "line": 157, "column": 8 },
+        "end": { "line": 157, "column": 60 }
+      },
+      "41": {
+        "start": { "line": 158, "column": 8 },
+        "end": { "line": 158, "column": 86 }
+      },
+      "42": {
+        "start": { "line": 160, "column": 8 },
+        "end": { "line": 160, "column": 39 }
+      },
+      "43": {
+        "start": { "line": 161, "column": 8 },
+        "end": { "line": 161, "column": 58 }
+      },
+      "44": {
+        "start": { "line": 162, "column": 8 },
+        "end": { "line": 162, "column": 32 }
+      },
+      "45": {
+        "start": { "line": 168, "column": 8 },
+        "end": { "line": 168, "column": 46 }
+      },
+      "46": {
+        "start": { "line": 169, "column": 8 },
+        "end": { "line": 169, "column": 50 }
+      },
+      "47": {
+        "start": { "line": 170, "column": 8 },
+        "end": { "line": 170, "column": 7109 }
+      },
+      "48": {
+        "start": { "line": 171, "column": 12 },
+        "end": { "line": 171, "column": 45 }
+      },
+      "49": {
+        "start": { "line": 172, "column": 12 },
+        "end": { "line": 172, "column": 65 }
+      }
+    },
+    "branchMap": {
+      "1": {
+        "line": 73,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 73, "column": 8 },
+            "end": { "line": 73, "column": 8 }
+          },
+          {
+            "start": { "line": 73, "column": 8 },
+            "end": { "line": 73, "column": 8 }
+          }
+        ]
+      },
+      "2": {
+        "line": 96,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 96, "column": 8 },
+            "end": { "line": 96, "column": 8 }
+          },
+          {
+            "start": { "line": 96, "column": 8 },
+            "end": { "line": 96, "column": 8 }
+          }
+        ]
+      },
+      "3": {
+        "line": 109,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 109, "column": 8 },
+            "end": { "line": 109, "column": 8 }
+          },
+          {
+            "start": { "line": 109, "column": 8 },
+            "end": { "line": 109, "column": 8 }
+          }
+        ]
+      },
+      "4": {
+        "line": 118,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 118, "column": 8 },
+            "end": { "line": 118, "column": 8 }
+          },
+          {
+            "start": { "line": 118, "column": 8 },
+            "end": { "line": 118, "column": 8 }
+          }
+        ]
+      },
+      "5": {
+        "line": 128,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 128, "column": 8 },
+            "end": { "line": 128, "column": 8 }
+          },
+          {
+            "start": { "line": 128, "column": 8 },
+            "end": { "line": 128, "column": 8 }
+          }
+        ]
+      },
+      "6": {
+        "line": 145,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 145, "column": 8 },
+            "end": { "line": 145, "column": 8 }
+          },
+          {
+            "start": { "line": 145, "column": 8 },
+            "end": { "line": 145, "column": 8 }
+          }
+        ]
+      },
+      "7": {
+        "line": 158,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 158, "column": 8 },
+            "end": { "line": 158, "column": 8 }
+          },
+          {
+            "start": { "line": 158, "column": 8 },
+            "end": { "line": 158, "column": 8 }
+          }
+        ]
+      },
+      "8": {
+        "line": 170,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 170, "column": 8 },
+            "end": { "line": 170, "column": 8 }
+          },
+          {
+            "start": { "line": 170, "column": 8 },
+            "end": { "line": 170, "column": 8 }
+          }
+        ]
+      }
+    }
+  },
+  "contracts/StakingRewardsFactory.sol": {
+    "l": {
+      "32": 1,
+      "34": 1,
+      "35": 1,
+      "43": 85,
+      "44": 85,
+      "46": 84,
+      "47": 84,
+      "48": 84,
+      "55": 75,
+      "56": 74,
+      "57": 293,
+      "64": 293,
+      "66": 293,
+      "67": 293,
+      "69": 293,
+      "70": 281,
+      "71": 281,
+      "73": 281,
+      "77": 280
+    },
+    "path": "/home/doctor_mora_pol/dev/fox-staking-unified-history/contracts/StakingRewardsFactory.sol",
+    "s": {
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 85,
+      "5": 85,
+      "6": 84,
+      "7": 84,
+      "8": 84,
+      "9": 75,
+      "10": 74,
+      "11": 293,
+      "12": 293,
+      "13": 293,
+      "14": 293,
+      "15": 293,
+      "16": 281,
+      "17": 281,
+      "18": 281,
+      "19": 280
+    },
+    "b": {
+      "1": [1, 0],
+      "2": [84, 1],
+      "3": [74, 1],
+      "4": [293, 0],
+      "5": [293, 0],
+      "6": [281, 12],
+      "7": [280, 1]
+    },
+    "f": { "1": 1, "2": 85, "3": 75, "4": 293 },
+    "fnMap": {
+      "1": {
+        "name": "constructor",
+        "line": 31,
+        "loc": {
+          "start": { "line": 28, "column": 4 },
+          "end": { "line": 36, "column": 4 }
+        }
+      },
+      "2": {
+        "name": "deploy",
+        "line": 42,
+        "loc": {
+          "start": { "line": 42, "column": 4 },
+          "end": { "line": 49, "column": 4 }
+        }
+      },
+      "3": {
+        "name": "notifyRewardAmounts",
+        "line": 54,
+        "loc": {
+          "start": { "line": 54, "column": 4 },
+          "end": { "line": 59, "column": 4 }
+        }
+      },
+      "4": {
+        "name": "notifyRewardAmount",
+        "line": 63,
+        "loc": {
+          "start": { "line": 63, "column": 4 },
+          "end": { "line": 79, "column": 4 }
+        }
+      }
+    },
+    "statementMap": {
+      "1": {
+        "start": { "line": 32, "column": 8 },
+        "end": { "line": 32, "column": 113 }
+      },
+      "2": {
+        "start": { "line": 34, "column": 8 },
+        "end": { "line": 34, "column": 35 }
+      },
+      "3": {
+        "start": { "line": 35, "column": 8 },
+        "end": { "line": 35, "column": 53 }
+      },
+      "4": {
+        "start": { "line": 43, "column": 8 },
+        "end": { "line": 43, "column": 88 }
+      },
+      "5": {
+        "start": { "line": 44, "column": 8 },
+        "end": { "line": 44, "column": 100 }
+      },
+      "6": {
+        "start": { "line": 46, "column": 8 },
+        "end": { "line": 46, "column": 125 }
+      },
+      "7": {
+        "start": { "line": 47, "column": 8 },
+        "end": { "line": 47, "column": 39 }
+      },
+      "8": {
+        "start": { "line": 48, "column": 8 },
+        "end": { "line": 48, "column": 39 }
+      },
+      "9": {
+        "start": { "line": 55, "column": 8 },
+        "end": { "line": 55, "column": 113 }
+      },
+      "10": {
+        "start": { "line": 56, "column": 8 },
+        "end": { "line": 56, "column": 2266 }
+      },
+      "11": {
+        "start": { "line": 57, "column": 12 },
+        "end": { "line": 57, "column": 47 }
+      },
+      "12": {
+        "start": { "line": 64, "column": 8 },
+        "end": { "line": 64, "column": 112 }
+      },
+      "13": {
+        "start": { "line": 66, "column": 8 },
+        "end": { "line": 66, "column": 88 }
+      },
+      "14": {
+        "start": { "line": 67, "column": 8 },
+        "end": { "line": 67, "column": 108 }
+      },
+      "15": {
+        "start": { "line": 69, "column": 8 },
+        "end": { "line": 69, "column": 2939 }
+      },
+      "16": {
+        "start": { "line": 70, "column": 12 },
+        "end": { "line": 70, "column": 49 }
+      },
+      "17": {
+        "start": { "line": 71, "column": 12 },
+        "end": { "line": 71, "column": 32 }
+      },
+      "18": {
+        "start": { "line": 73, "column": 12 },
+        "end": { "line": 73, "column": 3071 }
+      },
+      "19": {
+        "start": { "line": 77, "column": 12 },
+        "end": { "line": 77, "column": 79 }
+      }
+    },
+    "branchMap": {
+      "1": {
+        "line": 32,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 32, "column": 8 },
+            "end": { "line": 32, "column": 8 }
+          },
+          {
+            "start": { "line": 32, "column": 8 },
+            "end": { "line": 32, "column": 8 }
+          }
+        ]
+      },
+      "2": {
+        "line": 44,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 44, "column": 8 },
+            "end": { "line": 44, "column": 8 }
+          },
+          {
+            "start": { "line": 44, "column": 8 },
+            "end": { "line": 44, "column": 8 }
+          }
+        ]
+      },
+      "3": {
+        "line": 55,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 55, "column": 8 },
+            "end": { "line": 55, "column": 8 }
+          },
+          {
+            "start": { "line": 55, "column": 8 },
+            "end": { "line": 55, "column": 8 }
+          }
+        ]
+      },
+      "4": {
+        "line": 64,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 64, "column": 8 },
+            "end": { "line": 64, "column": 8 }
+          },
+          {
+            "start": { "line": 64, "column": 8 },
+            "end": { "line": 64, "column": 8 }
+          }
+        ]
+      },
+      "5": {
+        "line": 67,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 67, "column": 8 },
+            "end": { "line": 67, "column": 8 }
+          },
+          {
+            "start": { "line": 67, "column": 8 },
+            "end": { "line": 67, "column": 8 }
+          }
+        ]
+      },
+      "6": {
+        "line": 69,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 69, "column": 8 },
+            "end": { "line": 69, "column": 8 }
+          },
+          {
+            "start": { "line": 69, "column": 8 },
+            "end": { "line": 69, "column": 8 }
+          }
+        ]
+      },
+      "7": {
+        "line": 73,
+        "type": "if",
+        "locations": [
+          {
+            "start": { "line": 73, "column": 12 },
+            "end": { "line": 73, "column": 12 }
+          },
+          {
+            "start": { "line": 73, "column": 12 },
+            "end": { "line": 73, "column": 12 }
+          }
+        ]
+      }
+    }
+  }
+}
