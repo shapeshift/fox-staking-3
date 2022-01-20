@@ -14,7 +14,6 @@ import { expandTo18Decimals, mineBlock } from "./utils";
 import { solidity } from "ethereum-waffle"; // needed for assertions
 
 describe("StakingRewardsFactory", () => {
-
   let rewardsToken: TestERC20;
   let stakingToken: TestERC20;
   let accounts: SignerWithAddress[];
