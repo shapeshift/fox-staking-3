@@ -1,28 +1,24 @@
-import { ethers, deployments, getNamedAccounts } from "hardhat";
+import "hardhat-deploy";
+import "@nomiclabs/hardhat-ethers";
+
 import { expect } from "chai";
 import { StakingRewardsFactory } from "../typechain-types/StakingRewardsFactory";
 import { StakingRewards } from "../typechain-types/StakingRewards";
-import StakingRewardsArtifact from "../artifacts/contracts/StakingRewards.sol/StakingRewards.json";
+import { ethers, deployments } from "hardhat";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { TestERC20 } from "../typechain-types/TestERC20";
 
-import { BigNumber, Signer } from "ethers";
-
-import { expandTo18Decimals, mineBlock, setupTests } from "./utils";
-import { solidity } from "ethereum-waffle";
-
-// const { expect, ethers, waffle, provider, StakingRewards } = setupTests()
+import StakingRewardsArtifact from "../artifacts/contracts/StakingRewards.sol/StakingRewards.json";
+import { BigNumber } from "ethers";
+import { expandTo18Decimals, mineBlock } from "./utils";
+import { solidity } from "ethereum-waffle"; // needed for assertions
 
 describe("StakingRewardsFactory", () => {
-  // const [wallet, wallet1] = provider.getWallets()
-  // const loadFixture = waffle.createFixtureLoader([wallet], provider)
 
   let rewardsToken: TestERC20;
   let stakingToken: TestERC20;
   let accounts: SignerWithAddress[];
   let stakingRewardsFactory: StakingRewardsFactory;
-  // let genesis: number
-  // let rewardAmounts: BigNumber[]
 
   beforeEach(async () => {
     await deployments.fixture();
@@ -45,17 +41,10 @@ describe("StakingRewardsFactory", () => {
 
     const stakingTokenDeployment = await deployments.get("StakingToken");
     stakingToken = new ethers.Contract(
-      rewardsTokenDeployment.address,
-      rewardsTokenDeployment.abi,
+      stakingTokenDeployment.address,
+      stakingTokenDeployment.abi,
       accounts[0]
     ) as TestERC20;
-
-    // const fixture = await loadFixture(stakingRewardsFactoryFixture)
-    // rewardsToken = fixture.rewardsToken
-    // genesis = fixture.genesis
-    // rewardAmounts = fixture.rewardAmounts
-    // stakingRewardsFactory = fixture.stakingRewardsFactory
-    // stakingTokens = fixture.stakingTokens
   });
 
   it("deployment gas [ @skip-on-coverage ]", async () => {
