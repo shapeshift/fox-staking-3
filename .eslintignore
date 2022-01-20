@@ -2,3 +2,5 @@ node_modules
 artifacts
 cache
 coverage
+contracts
+openzeppelin-solidity-3.4.0
