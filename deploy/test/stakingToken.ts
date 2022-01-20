@@ -1,8 +1,8 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { expandTo18Decimals } from "../../test/utils";
-
-import TestERC20Path from '../../artifacts/contracts/test/TestERC20.sol/TestERC20.json';
+import "hardhat-deploy";
+import UniswapV2ERC20 from '@uniswap/v2-core/build/ERC20.json'
 
 const func : DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
@@ -13,7 +13,7 @@ const func : DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   
   await deploy("StakingToken", {
     from: admin,
-    contract: TestERC20Path, 
+    contract: UniswapV2ERC20, 
     args: [totalSupply],
     log: true,
   });

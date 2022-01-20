@@ -47,18 +47,6 @@ const config: HardhatUserConfig = {
     admin: {
       default: 0,
     },
-    daoTreasury: {
-      default: 1,
-    },
-    staker1: {
-      default: 2,
-    },
-    staker2: {
-      default: 3,
-    },
-    stakingContractMock: {
-      default: 4,
-    },
   },
   contractSizer: {
     alphaSort: true,
