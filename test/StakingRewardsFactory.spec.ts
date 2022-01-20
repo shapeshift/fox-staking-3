@@ -1,6 +1,7 @@
 import { ethers, deployments, getNamedAccounts } from "hardhat";
 import { expect } from "chai";
 import { StakingRewardsFactory} from "../typechain-types/StakingRewardsFactory";
+import StakingRewards  from "../artifacts/contracts/StakingRewards.sol/StakingRewards.json";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { TestERC20 } from "../typechain-types/TestERC20";
 
@@ -80,31 +81,35 @@ describe('StakingRewardsFactory', () => {
       )
     })
 
-    // it('can only be called by the owner', async () => {
-    //   await expect(stakingRewardsFactory.connect(wallet1).deploy(stakingTokens[1].address, 10000)).to.be.revertedWith(
-    //     'Ownable: caller is not the owner'
-    //   )
-    // })
+    it('can only be called by the owner', async () => {
+      await expect(stakingRewardsFactory.connect(accounts[1]).deploy(stakingToken.address, 10000)).to.be.revertedWith(
+        'Ownable: caller is not the owner'
+      )
+    })
 
-    // it('stores the address of stakingRewards and reward amount', async () => {
-    //   await stakingRewardsFactory.deploy(stakingTokens[1].address, 10000)
-    //   const [stakingRewards, rewardAmount] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(
-    //     stakingTokens[1].address
-    //   )
-    //   expect(await provider.getCode(stakingRewards)).to.not.eq('0x')
-    //   expect(rewardAmount).to.eq(10000)
-    // })
+    it('stores the address of stakingRewards and reward amount', async () => {
+      await stakingRewardsFactory.deploy(stakingToken.address, 10000)
+      const stakingRewardsInfo = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(
+        stakingToken.address
+      )
+      
+      expect(stakingRewardsInfo.stakingRewards).to.not.eq(ethers.constants.AddressZero);
+      expect(stakingRewardsInfo.rewardAmount).to.eq(10000)
+    })
 
-  //   it('deployed staking rewards has correct parameters', async () => {
-  //     await stakingRewardsFactory.deploy(stakingTokens[1].address, 10000)
-  //     const [stakingRewardsAddress] = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(
-  //       stakingTokens[1].address
-  //     )
-  //     const stakingRewards = new ethers.Contract(stakingRewardsAddress, StakingRewards.abi, provider)
-  //     expect(await stakingRewards.rewardsDistribution()).to.eq(stakingRewardsFactory.address)
-  //     expect(await stakingRewards.stakingToken()).to.eq(stakingTokens[1].address)
-  //     expect(await stakingRewards.rewardsToken()).to.eq(rewardsToken.address)
-  //   })
+    it('deployed staking rewards has correct parameters', async () => {
+      await stakingRewardsFactory.deploy(stakingToken.address, 10000)
+      const stakingRewardsInfo = await stakingRewardsFactory.stakingRewardsInfoByStakingToken(
+        stakingToken.address
+      )
+      
+      const stakingRewards = new ethers.Contract(stakingRewardsInfo.stakingRewards, 
+        StakingRewards.abi, accounts[0]);
+      
+      expect(await stakingRewards.rewardsDistribution()).to.eq(stakingRewardsFactory.address)
+      expect(await stakingRewards.stakingToken()).to.eq(stakingToken.address)
+      expect(await stakingRewards.rewardsToken()).to.eq(rewardsToken.address)
+    })
   })
 
   // describe('#notifyRewardsAmounts', () => {
