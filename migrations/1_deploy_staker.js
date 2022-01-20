@@ -12,6 +12,7 @@ module.exports = async function (deployer) {
       // deploy factory contract
       await deployer.deploy(StakingRewardsFactory, process.env.REWARD_TOKEN, stakingGenesis)
       const deployedStakingRewardsFactory = await StakingRewardsFactory.deployed()
+      
       // deploy a StakingRewards contract
       await deployedStakingRewardsFactory.deploy(process.env.STAKE_TOKEN, BigNumber.from(process.env.REWARD_AMOUNT).mul(oneEth).toString())
 

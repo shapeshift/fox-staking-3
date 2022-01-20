@@ -8,6 +8,7 @@ import "hardhat-gas-reporter";
 import "@nomiclabs/hardhat-etherscan";
 import "hardhat-deploy";
 import "solidity-coverage";
+
 import { HardhatUserConfig } from "hardhat/types";
 
 dotenv.config();
@@ -30,7 +31,7 @@ const config: HardhatUserConfig = {
   },
   networks: {
     hardhat: {
-      deploy: ["deploy/core"],
+      deploy: ["deploy/test"],
     },
     goerli: {
       url: process.env.GOERLI_URL || "",
