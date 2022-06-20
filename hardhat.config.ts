@@ -37,6 +37,14 @@ const config: HardhatUserConfig = {
       url: process.env.GOERLI_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      deploy: ["deploy/core"],
+    },
+    mainnet: {
+      url: process.env.MAINNET_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      deploy: ["deploy/core"],
+      gasPrice: 20000000000
     },
   },
   paths: {
