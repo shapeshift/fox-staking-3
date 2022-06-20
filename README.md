@@ -1,4 +1,15 @@
+# Updates for round 4 of liquidity mining rewards.
+
+[Proposal](https://snapshot.org/#/shapeshiftdao.eth/proposal/QmXMaKRR8fEtVsMskLtM2b1iZr9HUtQnXzUpMNLWDCM7se)
+
+FOX to reward: 6,750,000
+Start date: July 5th at 9am
+End date: November 17th at 9am
+
 # Staker (3)
+
+[StakingRewardsFactory](https://etherscan.io/address/0x2633a99d77c83bbb72af6971547bec9bb59756ee)
+[StakingRewards](https://etherscan.io/address/0x212ebf9fd3c10f371557b08e993eaab385c3932b)
 
 Farming contract based on https://github.com/Uniswap/liquidity-staker.
 
