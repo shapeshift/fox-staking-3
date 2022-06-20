@@ -7,7 +7,7 @@ const func : DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
   const { deploy } = deployments;
 
-  const stakingGenesis = Math.floor(Date.now() / 1000 + 60 * 5) // No more than 5 minutes in the future
+  const stakingGenesis = Math.floor(Date.now() / 1000 + 60 * 60 * 24) // 24 hours in future
   const { admin } = await getNamedAccounts();
   await deploy("StakingRewardsFactory", {
     from: admin,
