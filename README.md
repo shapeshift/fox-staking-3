@@ -1,3 +1,6 @@
+# Reminder:
+Add new farming contracts to snapshot strategies prior to go live!
+
 # Updates for round 4 of liquidity mining rewards.
 
 [Proposal](https://snapshot.org/#/shapeshiftdao.eth/proposal/QmXMaKRR8fEtVsMskLtM2b1iZr9HUtQnXzUpMNLWDCM7se)
