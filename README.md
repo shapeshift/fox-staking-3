@@ -12,7 +12,7 @@ FOX to reward: 6,750,000
 Start date: November 18th at 9am
 End date: Arpril 2 2023
 
-On Novmber 18th at ~9AM Denver Time the Shapeshift DAO multisig will need to transfer 6,750,000 FOX to the [StakingRewardsFactory](https://etherscan.io/address/0x736d4b4b046852b4c5c644fd101d60f2532936d2) and then call the function `notifyRewardAmount` with the staking token address [0x470e8de2ebaef52014a47cb5e6af86884947f08c](https://etherscan.io/address/0x470e8de2ebaef52014a47cb5e6af86884947f08c) to activate the rewards program. 
+On November 18th at ~9AM Denver Time the Shapeshift DAO multisig will need to transfer 6,750,000 FOX to the [StakingRewardsFactory](https://etherscan.io/address/0x736d4b4b046852b4c5c644fd101d60f2532936d2) and then call the function `notifyRewardAmount` with the staking token address [0x470e8de2ebaef52014a47cb5e6af86884947f08c](https://etherscan.io/address/0x470e8de2ebaef52014a47cb5e6af86884947f08c) to activate the rewards program. 
 
 
 # Updates for round 4 of liquidity mining rewards.
