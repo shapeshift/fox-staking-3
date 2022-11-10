@@ -1,6 +1,20 @@
 # Reminder:
 Add new farming contracts to snapshot strategies prior to go live!
 
+# Updates for round 5 of liquidity mining rewards.
+
+No proposal, this has been done in the purview of the TMDC's token allocations 
+
+[StakingRewardsFactory](https://etherscan.io/address/0x736d4b4b046852b4c5c644fd101d60f2532936d2)
+[StakingRewards](https://etherscan.io/address/0xc14eaa8284feff79edc118e06cadbf3813a7e555)
+
+FOX to reward: 6,750,000
+Start date: November 18th at 9am
+End date: Arpril 2 2023
+
+On Novmber 18th at ~9AM Denver Time the Shapeshift DAO multisig will need to transfer 6,750,000 FOX to the [StakingRewardsFactory](https://etherscan.io/address/0x736d4b4b046852b4c5c644fd101d60f2532936d2) and then call the function `notifyRewardAmount` with the staking token address [0x470e8de2ebaef52014a47cb5e6af86884947f08c](https://etherscan.io/address/0x470e8de2ebaef52014a47cb5e6af86884947f08c) to activate the rewards program. 
+
+
 # Updates for round 4 of liquidity mining rewards.
 
 [Proposal](https://snapshot.org/#/shapeshiftdao.eth/proposal/QmXMaKRR8fEtVsMskLtM2b1iZr9HUtQnXzUpMNLWDCM7se)
@@ -10,7 +24,7 @@ Add new farming contracts to snapshot strategies prior to go live!
 
 FOX to reward: 6,750,000
 Start date: July 5th at 9am
-End date: November 17th at 9am
+End date: November 18th at 9am
 
 On July 5th at ~ 9AM Denver Time the Shapeshift DAO multisig will need to transfer 6,750,000 FOX to the [StakingRewardsFactory](https://etherscan.io/address/0x7FF786dd10dFCB007FB94A02cAA2aAD5F2b9161c) and then call the function `notifyRewardAmount` with the staking token address 0x470e8de2ebaef52014a47cb5e6af86884947f08c to activate the rewards program. 
 
