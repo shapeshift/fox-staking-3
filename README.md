@@ -1,6 +1,15 @@
 # Reminder:
 Add new farming contracts to snapshot strategies prior to go live!
 
+# Updates for round 8 of liquidity mining rewards.
+
+[StakingRewardsFactory](https://etherscan.io/address/0x5B17E3341F57d914Cfb39539E507c0418D7f5Bb3)
+[StakingRewards](https://etherscan.io/address/0x662da6c777a258382f08b979d9489c3fbbbd8ac3)
+
+FOX to reward: 5,000,000
+Start date: Wednesday, December 27, 2023 11:00 PM UTC  
+Duration: 4.5 months
+
 # Updates for round 7 of liquidity mining rewards.
 
 [StakingRewardsFactory](https://etherscan.io/address/0x1b16A8c2F14b3b15206D7E9BC39FCbee3976729e)
